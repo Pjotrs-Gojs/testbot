@@ -16,6 +16,13 @@ stripe.api_key = os.getenv("STRIPE_SECRET_KEY")      # тестовый ключ
 # --- 3. Приветствие ---
 @dp.message(Command(commands=["start"]))
 async def start(message: types.Message):
+    # если пришёл параметр paid
+    if len(args) > 1 and args[1] == "paid":
+        await message.answer(
+            f"Спасибо за оплату! 💄\n\nВот доступ к курсу:\n{CHANNEL_LINK}"
+        )
+        return
+        
     kb = types.ReplyKeyboardMarkup(
         keyboard=[
             [types.KeyboardButton(text="💄 Курсы")],
