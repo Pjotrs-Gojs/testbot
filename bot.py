@@ -18,22 +18,13 @@ stripe.api_key = STRIPE_SECRET_KEY
 # --- START ---
 @dp.message(CommandStart())
 async def start(message: types.Message):
-    args = message.text.split()
-
-    # если пришёл после оплаты
-    if len(args) > 1 and args[1] == "paid":
-        await message.answer(
-            f"Спасибо за оплату! 💄\n\n"
-            f"Вот твой доступ к курсу:\n{CHANNEL_LINK}\n\n"
-            f"Присоединяйся и начинай обучение!"
-        )
-        return
 
     # обычный старт
     kb = types.ReplyKeyboardMarkup(
         keyboard=[
             [types.KeyboardButton(text="💄 Курсы")],
-            [types.KeyboardButton(text="💡 Советы")]
+            [types.KeyboardButton(text="💡 Советы")],
+            [types.KeyboardButton(text="✅ Оплачено")]
         ],
         resize_keyboard=True
     )
@@ -74,6 +65,11 @@ async def menu(message: types.Message):
             "— Не перегружай тон\n\n"
             "Хочешь полный курс? Нажми 💄 Курсы"
         )
+        
+    elif message.text == "✅ Я оплатил":
+        await message.answer(
+            f"Спасибо! 💄\nВот доступ:\n{CHANNEL_LINK}"
+        )
 
 # --- BUY ---
 @dp.callback_query(lambda c: c.data == "buy")
@@ -92,7 +88,7 @@ async def buy(callback: types.CallbackQuery):
                 'quantity': 1,
             }],
             mode='payment',
-            success_url=f"https://t.me/{BOT_USERNAME}?start=paid",
+            success_url=f"https://t.me/{BOT_USERNAME}",
             cancel_url=f"https://t.me/{BOT_USERNAME}",
             metadata={
                 "telegram_id": callback.from_user.id
