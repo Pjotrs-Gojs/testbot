@@ -69,8 +69,8 @@ async def buy(callback: types.CallbackQuery):
             'quantity': 1,
         }],
         mode='payment',
-        success_url=f"https://t.me/{os.getenv('BOT_USERNAME')}?start=paid",
-        cancel_url=f"https://t.me/{os.getenv('BOT_USERNAME')}",
+        success_url=f"https://t.me/{os.getenv('testbotnr1_bot')}?start=paid",
+        cancel_url=f"https://t.me/{os.getenv('testbotnr1_bot')}",
         metadata={'telegram_id': callback.from_user.id}
     )
 
