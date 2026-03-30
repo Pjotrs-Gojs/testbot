@@ -66,7 +66,7 @@ async def menu(message: types.Message):
             "Хочешь полный курс? Нажми 💄 Курсы"
         )
         
-    elif message.text == "✅ Я оплатил":
+    elif message.text == "✅ Оплачено":
         await message.answer(
             f"Спасибо! 💄\nВот доступ:\n{CHANNEL_LINK}"
         )
